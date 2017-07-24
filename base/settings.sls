@@ -1,5 +1,5 @@
-{% set p    = salt['pillar.get']('metricbeat', {}) %}
-{% set g    = salt['grains.get']('metricbeat', {}) %}
+{% set p    = salt['pillar.get']('base', {}) %}
+{% set g    = salt['grains.get']('base', {}) %}
 
 {%- set base = {} %}
 {%- do base.update( {
