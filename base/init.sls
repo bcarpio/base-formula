@@ -1,9 +1,13 @@
 #
+{%- from 'base/settings.sls' import base with context %}
 
 salt_minion_config:
   file.managed:
      - name: /etc/salt/minion
      - source: salt://base/files/minion
+     - template: jinja
+     - context:
+       master: {{ base.master }}
 
 salt_minion_service:
   service.running:
