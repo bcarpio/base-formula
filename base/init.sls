@@ -1,6 +1,10 @@
 #
 {%- from 'base/settings.sls' import base with context %}
 
+include:
+  - filebeat
+  - metricbeat
+
 salt_minion_config:
   file.managed:
      - name: /etc/salt/minion

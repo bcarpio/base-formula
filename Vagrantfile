@@ -5,7 +5,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "puppetlabs/centos-7.0-64-puppet"
   config.vm.synced_folder "./.vagrant-salt", "/srv/salt", id: "vagrant-root"
 
   config.ssh.forward_agent = true
@@ -17,6 +17,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :box
+  end
+
+  if Vagrant.has_plugin?("vagrant-saltdeps")
+    config.vm.provision :saltdeps do |deps|
+      deps.checkout_path =  "./.vagrant-salt/deps"
+      deps.deps_path     =  "./.vagrant-salt/saltdeps.yml"
+    end
   end
 
   # Provision VM with this SaltStack formula, in masterless mode.
